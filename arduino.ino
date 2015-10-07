@@ -414,13 +414,12 @@ void loop() {
     }
     
 
-    //if attuatori digitali (todo analogici) 
+    //if attuatori digitali  
     if( (att[i]==1)and(servoM[i]==1)and(pinCom[i]==1) ){ //se quel pin è di attuatore, in particolare un servo e server gli ha detto di controllarlo
       Serial.println("attuatore in funzione sul pin numero:");
       Serial.println(i);
       delay(500);
     }//if 
-    //todo if altri attuatori (led ecc)
   }//for
   
   //controllo array valori vecchi/nuovi
