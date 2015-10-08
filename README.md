@@ -16,9 +16,12 @@ Components can work all together with no conflicts. Board can handle only one se
 
 Instruction set (instructions start with "@" and end with "#"):
 
--@pin:00#   (00 pin will be used in the current application)
 
--@sen:00#  (00 pin is a sensor pin)
+
+
+	-@pin:00#   (00 pin will be used in the current application)
+
+	-@sen:00#  (00 pin is a sensor pin)
 
 -@tmp:00#  (00 pin is a temperature sensor pin)
 
@@ -26,17 +29,17 @@ Instruction set (instructions start with "@" and end with "#"):
 
 -@led:05# (05 pin is a LED pin)
 
--@att:05# (05 pin is an actuator pin)
+	-@att:05# (05 pin is an actuator pin)
 
--@a#  (Ack signal from Port)
+	-@ack#  (Ack signal from Port)
 
--@pinreq# ("tell me the pin you are using")
+	-@prq# ("tell me the pin you are using")
 
--@stp:00#  ("stop using 00 pin")
+	-@stp:00#  ("stop using 00 pin")
 
--@lon:05# ("turn on the LED on 05 pin")
+	-@sda:[num_pin]:[value]# set digital actuator; num_pin is the position of the actuator, value canbe 0 or 1
 
--@lof:05# ("turn off the LED on 05 pin")
+	-@saa:[num_pin]:[value]# set analog actuator; num_pin is the position of the actuator, value is an integer between 000 and 999;
 
 -@m09:60#  ("rotate the servo on 09 pin of a 60 degrees angle")
 
