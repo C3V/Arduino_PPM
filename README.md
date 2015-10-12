@@ -29,6 +29,10 @@ Instruction set (instructions start with "@" and end with "#"):
 
 -@dis:040# (if an object is 40 cm near the ping, the sensor will notify the server)
 
+-@ltr:090# (lum tolerance in 90)
+
+-@ttr:01# (tmp tolerance is 1)
+
 -@rgb:11:255# (turn on the rgb led on pin 11 (red or blue or green) at max power (255))
 
 
