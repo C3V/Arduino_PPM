@@ -396,7 +396,7 @@ void loop() {
         Serial.print("@get:");
       }
       Serial.print(ping_pin);
-      Serial.print(":0");  //aggiungere a github
+      Serial.print(":0");  
       //Serial.print(duration);
       Serial.print(distance);
       Serial.print("#");
