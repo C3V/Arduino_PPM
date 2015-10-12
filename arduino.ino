@@ -392,7 +392,7 @@ void loop() {
       if(ping_pin<10){
         Serial.print("@get:0");
       }
-      else if(ping_pin>=10){
+      else{
         Serial.print("@get:");
       }
       Serial.print(ping_pin);
