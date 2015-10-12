@@ -5,8 +5,6 @@ Instruction set (instructions start with "@" and terminate with "#"):
 
 -@pin:00#   (00 pin will be used in the current application)
 
--@sen:00#  (00 pin is a sensor pin)
-
 -@tmp:00#  (00 pin is a temperature sensor pin)
 
 -@lum:01# (00 pin is a luminosity sensor pin)
