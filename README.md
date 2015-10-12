@@ -1,7 +1,7 @@
 # Arduino_PPM
 
 
-Instruction set (instructions start with "@" and end with "#"):
+Instruction set (instructions start with "@" and terminate with "#"):
 
 -@pin:00#   (00 pin will be used in the current application)
 
