@@ -1,18 +1,5 @@
 # Arduino_PPM
 
-An arduino board running arduino.ino code can dialogue with a server to obtain measures using (at the moment):
-
--Temperature sensor
-
--Luminosity sensor
-
-and operate in an environment (following indications from the server) using:
-
--LED actuator
-
--Servomotor actuator
-
-Components can work all together with no conflicts. Board can handle only one sensor per type, from all the sensor types specificated. Sensors, at the moment, are supposed to be only analog (in order not to use too much of the limited arduino memory with an expensive array implementation for digital measures), but it will be optimized in the final steps of the project in order to handle the PING sensor, which is digital.
 
 Instruction set (instructions start with "@" and end with "#"):
 
@@ -34,12 +21,14 @@ Instruction set (instructions start with "@" and end with "#"):
 
 -@stp:00#  ("stop using 00 pin")
 
--@lon:05# ("turn on the LED on 05 pin")
+-@sda:05:1# (turn on the digital actuator on pin 05)
 
--@lof:05# ("turn off the LED on 05 pin")
+-@saa:08:090# (turn on the analog actuator (servo) and rotate in of a 90 degrees angle)
 
--@m09:60#  ("rotate the servo on 09 pin of a 60 degrees angle")
+-@png:02# (ping sensor on 02 pin)
 
--
+-@dis:040# (if an object is 40 cm near the ping, the sensor will notify the server)
+
+-@rgb:11:255# (turn on the rgb led on pin 11 (red or blue or green) at max power (255))
 
 
