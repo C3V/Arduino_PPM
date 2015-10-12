@@ -416,10 +416,10 @@ void loop() {
 
         delay(500);  //500
       }//if
-      //qui if digitale (todo)
+      
     }//fine if sensori
 
-    //if attuatori digitali 
+    
   }//for
   
   //controllo array valori vecchi/nuovi
