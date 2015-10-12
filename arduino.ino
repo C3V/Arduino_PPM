@@ -396,8 +396,9 @@ void loop() {
         Serial.print("@get:");
       }
       Serial.print(ping_pin);
-      Serial.print(":");
-      Serial.print(duration);
+      Serial.print(":0");  //aggiungere a github
+      //Serial.print(duration);
+      Serial.print(distance);
       Serial.print("#");
       delay(500);    
     }    
@@ -430,10 +431,10 @@ void loop() {
 
         delay(500);  //500
       }//if
-      
+      //qui if digitale (todo)
     }//fine if sensori
 
-     
+    //if attuatori digitali 
   }//for
   
   //controllo array valori vecchi/nuovi
@@ -446,9 +447,16 @@ void loop() {
         Serial.print("@get:0");
         Serial.print(i);
         Serial.print(':');
-        Serial.print((int)a_misT[i]);
+        if( (int)a_misT[i] < 10){
+          Serial.print("00" + (int)a_misT[i]);
+        }
+        else if( (int)a_misT[i]<100){
+          Serial.print("0" + (int)a_misT[i]);
+        }
+        else{
+          Serial.print((int)a_misT[i]);
+        }      
         Serial.print('#');
-        //Serial.println(a_misT[i]);   
       }
     }//if
 
@@ -458,9 +466,16 @@ void loop() {
         Serial.print("@get:0");
         Serial.print(i);
         Serial.print(':');
-        Serial.print((int)a_misL[i]);
+        if( (int)a_misL[i] < 10){
+          Serial.print("00" + (int)a_misL[i]);
+        }
+        else if( (int)a_misL[i]<100){
+          Serial.print("0" + (int)a_misL[i]);
+        }
+        else{
+          Serial.print((int)a_misL[i]);
+        }
         Serial.print('#');
-        //Serial.println(a_misL[i]); 
       }
     }//if
   }//for
