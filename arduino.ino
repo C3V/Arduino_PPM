@@ -358,7 +358,6 @@ void loop() {
 
   //@dis:(3 byte)#
   else if( (buff[0]=='@')&&(buff[1]=='d')&&(buff[2]=='i')&&(buff[3]=='s')&&(buff[4]==':')&&(buff[8]=='#') ){ 
-    //Serial.println("Arduino, il pin appartiene a un sensore di luminosita'");
               
       server_pin=((buff[5]-48)*100)+((buff[6]-48)*10)+(buff[7]-48); //converte in decimale
       //Serial.println(server_pin);
@@ -390,8 +389,10 @@ void loop() {
     distance=duration/29/2;  
     //Serial.println(distance);
     if(distance<dist){   //da decidere se se ne occupa il server
+      Serial.print("@");
       Serial.print(duration);
-      delay(5);
+      Serial.print("#");
+      delay(500);
     }    
   }//if
 
@@ -419,7 +420,7 @@ void loop() {
       
     }//fine if sensori
 
-    
+     
   }//for
   
   //controllo array valori vecchi/nuovi
