@@ -157,7 +157,7 @@ void loop() {
      
   }//if
 
-  //tmp tolerance
+  //tmp tolerance @ttr:00#
   else if( (buff[0]=='@')&&(buff[1]=='t')&&(buff[2]=='t')&&(buff[3]=='r')&&(buff[4]==':')&&(buff[7]=='#') ) {                             
     server_pin=((buff[5]-48)*10)+(buff[6]-48); 
     Serial.print("@ack#");
@@ -389,10 +389,17 @@ void loop() {
     distance=duration/29/2;  
     //Serial.println(distance);
     if(distance<dist){   //da decidere se se ne occupa il server
-      Serial.print("@");
+      if(ping_pin<10){
+        Serial.print("@get:0");
+      }
+      else if(ping_pin>=10){
+        Serial.print("@get:");
+      }
+      Serial.print(ping_pin);
+      Serial.print(":");
       Serial.print(duration);
       Serial.print("#");
-      delay(500);
+      delay(500);    
     }    
   }//if
 
@@ -403,15 +410,21 @@ void loop() {
       bisogna fare due routine separate per sensori digitali e analogici, perché in quelli analogici sono necessari calcoli per rendere la misurazione dipendente dal'alimentazione a 5V*/
       if( (i>=0)&&(i<6) ){ //pin analogici A0____A5 (6 pin) 
         //si può lasciare fare al server la gestione dei vari sensori, arduino si può limitare a misurare      
-        if(disp_type[i]==1){ 
-          sensor_voltageT=analogRead(i);
+        if(disp_type[i]==1){
+          if(analogRead(i)<=999){
+            sensor_voltageT=analogRead(i);
+          }
+          else sensor_voltageT=999;
           /*a_misT[i]=sensor_voltageT*voltage/1024; //gestione particolare, caso specifico
           a_misT[i]=(a_misT[i]*1000-500)/10;*/
           a_misT[i]=sensor_voltageT;
         }
 
         if(disp_type[i]==2){
-          sensor_voltageL=analogRead(i);
+          if(analogRead(i)<=999){
+            sensor_voltageL=analogRead(i);
+          }
+          else sensor_voltageL=999;
           a_misL[i]=sensor_voltageL;
         }
 
