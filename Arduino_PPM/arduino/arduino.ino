@@ -5,10 +5,10 @@ int end_loop=0;
 int minor=0; //per controllare se la lunghezza di un messaggio è minore o maggiore di quella minima o massima consentita dal protocollo, o compresa tra le due
 int middle=0;
 int major=0;
-float a_old_misT[6];//analogica-temperatura   N.B. se volessimo misurare anche tramite i pin digitali sarebbe fino a 20
-float a_misT[6]; //analogica
-float a_old_misL[6];//analogica-luminosità
-float a_misL[6]; //analogica
+int a_old_misT[6];//analogica-temperatura   N.B. se volessimo misurare anche tramite i pin digitali sarebbe fino a 20
+int a_misT[6]; //analogica
+int a_old_misL[6];//analogica-luminosità
+int a_misL[6]; //analogica
 int array_start=1; //serve a inizializzare old_mis in loop solo una volta
 const float voltage=5.0; //tensione di alimentazione data da arduino
 int sensor_voltageL=0; //usato in lettura analogica
@@ -38,6 +38,7 @@ bool endMessage;
 
 void setup() {
   Serial.begin(9600); 
+  
 }
 
 /*bisogna leggere la stringa in arrivo mettedo dentro un buffer i byte letti serialmente. 
@@ -47,6 +48,8 @@ se arduino non riconosce nessuno dei messaggi codificati negli if una volta che 
 inserito del codice che riazzera il buffer di lettura (altrimenti si hanno sovrapposizioni imprevedibili nel buffer di lettura e nessun comando corrisponde più)*/
 
 void loop() {
+  delay(400);
+
 
   end_loop=0;
   endMessage = false;
@@ -360,6 +363,8 @@ void loop() {
       Serial.print("@ack#");
       pinMode(server_pin, INPUT);
       lum[server_pin]=1;
+      sensor[server_pin]= 1;
+      pinCom[server_pin]= 1 ;
       server_pin=0;
    
     for(int i=0;i<64;i++){ 
@@ -400,8 +405,10 @@ void loop() {
         }
 
         if(lum[i]==1){
-          sensor_voltageL=analogRead(i);
-          a_misL[i]=sensor_voltageL;
+          //sensor_voltageL=analogRead(i);
+          a_misL[i]=((int)random(50) * 10) + (int)random(100);
+
+          
         }
 
         delay(500);  //500
@@ -450,7 +457,14 @@ void loop() {
         Serial.print("@get:0");
         Serial.print(i);
         Serial.print(':');
-        Serial.print(a_misL[i]);
+
+        if(a_misL[i] < 10)
+          Serial.print("00" + a_misL[i]);
+        else if(a_misL[i] < 100)
+          Serial.print("0" + a_misL[i]);
+        else
+          Serial.print(a_misL[i]);
+       // Serial.print(a_misL[i]);
         Serial.print('#');
         //Serial.println(a_misL[i]); 
       }

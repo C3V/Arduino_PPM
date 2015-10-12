@@ -5,10 +5,10 @@ int end_loop=0;
 int minor=0; //per controllare se la lunghezza di un messaggio è minore o maggiore di quella minima o massima consentita dal protocollo, o compresa tra le due
 int middle=0;
 int major=0;
-float a_old_misT[6];//analogica-temperatura   N.B. se volessimo misurare anche tramite i pin digitali sarebbe fino a 20
-float a_misT[6]; //analogica
-float a_old_misL[6];//analogica-luminosità
-float a_misL[6]; //analogica
+int a_old_misT[6];//analogica-temperatura   N.B. se volessimo misurare anche tramite i pin digitali sarebbe fino a 20
+int a_misT[6]; //analogica
+int a_old_misL[6];//analogica-luminosità
+int a_misL[6]; //analogica
 int array_start=1; //serve a inizializzare old_mis in loop solo una volta
 const float voltage=5.0; //tensione di alimentazione data da arduino
 int sensor_voltageL=0; //usato in lettura analogica
@@ -410,11 +410,11 @@ void loop() {
     }//fine if sensori
 
     for(int i=0;i<6;i++){  //converto a int per fare il confronto (a causa dell'imprecisione dei float)
-      a_misT[i]=(int)(a_misT[i]+0.5);
-      a_old_misT[i]=(int)(a_old_misT[i]+0.5);
+      a_misT[i]= (int)a_misT[i];
+      a_old_misT[i]=(int)a_old_misT[i];
       
-      a_misL[i]=(int)(a_misL[i]+0.5);
-      a_old_misL[i]=(int)(a_old_misL[i]+0.5);
+      a_misL[i]=(int)a_misL[i];
+      a_old_misL[i]=(int)a_old_misL[i];
     }
     
 
