@@ -98,7 +98,10 @@ void loop() {
     }
     if(pin_count==0){
         Serial.print("@err#");
-      }   
+      }
+    else{
+      Serial.print("@ack#"); 
+    }
      
     for(int i=0;i<64;i++){//ripuliamo il buffer di lettura (23)
       buff[i]=0;
@@ -392,11 +395,11 @@ void loop() {
       if(ping_pin<10){
         Serial.print("@get:0");
       }
-      else{
+      else {
         Serial.print("@get:");
       }
       Serial.print(ping_pin);
-      Serial.print(":0");  
+      Serial.print(":0");  //aggiungere a github
       //Serial.print(duration);
       Serial.print(distance);
       Serial.print("#");
@@ -483,8 +486,15 @@ void loop() {
   stp=0; //dopo aver perso una misurazione in caso di comando @stp, si resetta a zero 
 
   for(int i=0;i<6;i++){
-    a_old_misT[i]=a_misT[i]; //come detto sopra, se la temperatura sale o scende "dolcemente", anche se alla lunga varia di molto il server non viene notificato! occhio
-    a_old_misL[i]=a_misL[i];
+    /*a_old_misT[i]=a_misT[i]; //come detto sopra, se la temperatura sale o scende "dolcemente", anche se alla lunga varia di molto il server non viene notificato! occhio
+    a_old_misL[i]=a_misL[i];*/
+    if( (a_old_misT[i]<a_misT[i]-tmp_tolerance)or(a_old_misT[i]>a_misT[i]+tmp_tolerance) ){
+      a_old_misT[i]=a_misT[i];
+    }
+
+    if( (a_old_misL[i]<a_misL[i]-lum_tolerance)or(a_old_misL[i]>a_misL[i]+lum_tolerance) ){
+      a_old_misL[i]=a_misL[i];
+    }
   } //for
   
   array_start=0; //non re-inizializzare old_mis
