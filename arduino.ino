@@ -35,6 +35,7 @@ int ping_pin=-1;
 int distance=-1;
 int duration=-1;
 int dist=-1;
+int rgb_pin=-1;
 
 void setup() {
   Serial.begin(9600); 
@@ -252,6 +253,23 @@ void loop() {
     
   }//if
 
+  //@rgb:11:255# 
+  else if( (buff[0]=='@')&&(buff[1]=='r')&&(buff[2]=='g')&&(buff[3]=='b')&&(buff[4]==':')&&(buff[7]==':')&&(buff[11]=='#') ){                        
+    rgb_pin=((buff[5]-48)*10)+(buff[6]-48); //converte in decimale
+    server_pin=((buff[8]-48)*100)+((buff[9]-48)*10)+(buff[10]-48);
+    pinMode(rgb_pin,OUTPUT);
+    analogWrite(rgb_pin, server_pin);   
+    server_pin=0;
+    rgb_pin=-1;
+       
+    for(int i=0;i<64;i++){ 
+      buff[i]=0;
+    } 
+        
+    cycle=0;
+    
+  }//if
+
   //accendi l'attuatore analogico su questo pin  @saa:05:999#  
   else if( (buff[0]=='@')&&(buff[1]=='s')&&(buff[2]=='a')&&(buff[3]=='a')&&(buff[4]==':')&&(buff[7]==':')&&(buff[11]=='#') ){                         
     server_pin=((buff[5]-48)*10)+(buff[6]-48); //converte in decimale
@@ -455,3 +473,6 @@ int measure_distance(){
   pinMode(ping_pin,INPUT);
   return pulseIn(ping_pin,HIGH);
 }
+
+
+    
