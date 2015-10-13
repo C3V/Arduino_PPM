@@ -16,7 +16,7 @@ int sensor_voltageT=0;
 float f_voltage=0;
 #include <Servo.h>
 Servo servo; 
-int disp_type[20]; //se 1-->sensore di temperatura,2-->luminosità,3-->ping, se 4-->attuatore, se 5-->servoM,
+int disp_type[20]; //se 1-->sensore di temperatura,2-->luminosità,3-->ping, se 4-->attuatore, se 5-->servoM, 6-->bottone
 //int pin_array[20];                                     
 int server_pin=-1; 
 int grades=0; 
@@ -36,6 +36,8 @@ int distance=-1;
 int duration=-1;
 int dist=-1;
 int rgb_pin=-1;
+byte digitalValues[14];
+byte actualValue=-1;
 
 void setup() {
   Serial.begin(9600); 
@@ -182,6 +184,22 @@ void loop() {
     Serial.print("@ack#");
     pinMode(server_pin, OUTPUT);
     disp_type[server_pin]=4;
+    server_pin=0;
+   
+    for(int i=0;i<64;i++){ 
+      buff[i]=0;
+    } 
+        
+    cycle=0; 
+    
+  }//if
+
+  else if( (buff[0]=='@')&&(buff[1]=='d')&&(buff[2]=='s')&&(buff[3]=='e')&&(buff[4]==':')&&(buff[7]=='#') ){                              
+    server_pin=((buff[5]-48)*10)+(buff[6]-48); 
+    pinCom[server_pin]=1;
+    Serial.print("@ack#");
+    pinMode(server_pin, INPUT);
+    disp_type[server_pin]=6;
     server_pin=0;
    
     for(int i=0;i<64;i++){ 
@@ -391,7 +409,7 @@ void loop() {
     duration= measure_distance();
     distance=duration/29/2;  
     //Serial.println(distance);
-    if(distance<dist){   
+    if(distance<dist){   //da decidere se se ne occupa il server
       if(ping_pin<10){
         Serial.print("@get:0");
       }
@@ -399,7 +417,7 @@ void loop() {
         Serial.print("@get:");
       }
       Serial.print(ping_pin);
-      Serial.print(":0");  
+      Serial.print(":0");  //aggiungere a github
       //Serial.print(duration);
       Serial.print(distance);
       Serial.print("#");
@@ -409,7 +427,7 @@ void loop() {
 
   //lettura dei pin in esame
   for(int i=0;i<20;i++){
-    if( (pinCom[i]==1)and((disp_type[i]==1)or(disp_type[i]==2)) ){ //temperatura o luminosità
+    if( (pinCom[i]==1)and((disp_type[i]==1)or(disp_type[i]==2))or(disp_type[i]==6) ){ //temperatura o luminosità o bottone
       /*leggi il valore sul pin corrispondente con tipo analogread() ecc, e metti il valore letto in mis[i]
       bisogna fare due routine separate per sensori digitali e analogici, perché in quelli analogici sono necessari calcoli per rendere la misurazione dipendente dal'alimentazione a 5V*/
       if( (i>=0)&&(i<6) ){ //pin analogici A0____A5 (6 pin) 
@@ -431,9 +449,23 @@ void loop() {
           else sensor_voltageL=999;
           a_misL[i]=sensor_voltageL;
         }
-
         delay(500);  //500
+        
       }//if
+      else if(disp_type[i]==6){
+        actualValue=digitalRead(i);
+        if((actualValue!=digitalValues[i])){
+          digitalValues[i]=actualValue;
+          Serial.print("@get:");
+          if(i<10){
+            Serial.print("0");
+            Serial.print(i);
+          }else Serial.print(i);
+          Serial.print(":");
+          Serial.print(actualValue);
+          Serial.print("#");
+        }
+      }
       //qui if digitale (todo)
     }//fine if sensori
 
