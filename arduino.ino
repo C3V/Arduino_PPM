@@ -391,7 +391,7 @@ void loop() {
     duration= measure_distance();
     distance=duration/29/2;  
     //Serial.println(distance);
-    if(distance<dist){   //da decidere se se ne occupa il server
+    if(distance<dist){   
       if(ping_pin<10){
         Serial.print("@get:0");
       }
@@ -399,7 +399,7 @@ void loop() {
         Serial.print("@get:");
       }
       Serial.print(ping_pin);
-      Serial.print(":0");  //aggiungere a github
+      Serial.print(":0");  
       //Serial.print(duration);
       Serial.print(distance);
       Serial.print("#");
