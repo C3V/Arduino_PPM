@@ -11,6 +11,8 @@ Instruction set (instructions start with "@" and terminate with "#"):
 
 -@led:05# (05 pin is a LED pin)
 
+-@dse:07# (there is a button on 07 pin)
+
 -@att:05# (05 pin is an actuator pin)
 
 -@a#  (Ack signal from Port)
